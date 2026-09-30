@@ -112,3 +112,20 @@ before executing: replaced with an honest "NOT MEASURED yet" note. Real measured
 counts, once actually run: checkin 131,930; tip 908,915; review 6,990,280 (matches
 the dataset's own published "~6.99M" figure exactly); user 1,987,897. Full bronze
 layer: ~10.17M rows across all 5 files.
+
+## Day (2026-09-30) — silver for review, first real referential-integrity check
+
+**A real foreign-key check, enforced for the first time in this project.** Every
+review has a `business_id`; silver now checks it actually exists in
+`business_clean` via a LEFT JOIN anti-join (not `NOT IN`, which doesn't scale the
+same way against 150K businesses), flagging rule `FK1` on any orphaned review. The
+brief's own "Referential integrity failure" quarantine category has been discussed
+since early in this project but never actually implemented as its own rule until now.
+
+**Result at real scale (6.99M rows): perfect.** 6,990,280 clean + 0 quarantined +
+0 rejected = 6,990,280 bronze rows, exact. Zero duplicate review_id. **Zero FK
+violations** - every single review's business_id genuinely exists in business_clean.
+Whole 4-stage build (staged/checked/keyed/fk_checked) plus publish ran in ~107s
+total on the same small serverless warehouse used for everything else in this
+project - real scale (46x business.json's row count) didn't need different
+infrastructure, just more time.
