@@ -102,3 +102,13 @@ DROPped in Databricks; the SQL file stays in git history with a "superseded" not
 the top rather than being deleted, same convention as BRFSS's old proof-of-concept
 files. Any "rating/closure by category" question now goes through
 `fact_business JOIN bridge_business_category JOIN dim_category` instead.
+
+## Day (2026-09-30) — remaining 4 bronze tables loaded
+
+**Caught myself inventing numbers before running anything, and fixed it before
+running.** A draft of `06_bronze_remaining.sql` had "expected" row counts for
+checkin/tip/user typed into a comment - made up, not sourced from anywhere. Fixed
+before executing: replaced with an honest "NOT MEASURED yet" note. Real measured
+counts, once actually run: checkin 131,930; tip 908,915; review 6,990,280 (matches
+the dataset's own published "~6.99M" figure exactly); user 1,987,897. Full bronze
+layer: ~10.17M rows across all 5 files.
