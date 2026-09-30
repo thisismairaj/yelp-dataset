@@ -129,3 +129,18 @@ Whole 4-stage build (staged/checked/keyed/fk_checked) plus publish ran in ~107s
 total on the same small serverless warehouse used for everything else in this
 project - real scale (46x business.json's row count) didn't need different
 infrastructure, just more time.
+
+## Day (2026-09-30) — fact_review extends the star schema, one real finding for free
+
+**Extending a star schema is additive, not a redesign.** Adding `fact_review` (a new
+grain, one row per review) didn't touch `fact_business`, `dim_category`, or the
+bridge table at all - just a new fact that happens to share `business_id` with the
+existing one. Re-verified 0 orphaned business_ids at this layer too, on top of
+silver's own FK check - belt and suspenders, cheap to do since the join is small.
+
+**A real, unplanned finding came straight out of the first join query.** Nightlife's
+average rating peaked at 3.94 in 2020 (COVID year) - the highest of any year - despite
+review *volume* actually dropping that year (104,666 vs 201,861 in 2019). Not
+explained yet (fewer venues open and only the best survived to get reviewed? people
+more grateful to go out at all during lockdowns?), but genuinely surfaced by the data,
+not searched for - the same kind of finding the BRFSS risk-stacking table produced.
