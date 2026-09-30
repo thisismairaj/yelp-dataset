@@ -144,3 +144,19 @@ review *volume* actually dropping that year (104,666 vs 201,861 in 2019). Not
 explained yet (fewer venues open and only the best survived to get reviewed? people
 more grateful to go out at all during lockdowns?), but genuinely surfaced by the data,
 not searched for - the same kind of finding the BRFSS risk-stacking table produced.
+
+## Day (2026-09-30) — silver for user, same correction pattern generalizes again
+
+**`elite` and `friends` are both comma-separated strings, same as `categories` was.**
+Confirmed by looking at real rows first (now the third time this exact pattern has
+shown up on this dataset). One real user: 10 years of elite status
+(2007-2016) and 550 friends, all packed into two string fields. Empty string ("")
+correctly becomes an empty array via `NULLIF`, not a 1-element array containing "".
+
+**Result: perfect reconciliation again, fourth time in a row on this dataset.**
+1,987,897 clean + 0 quarantined + 0 rejected = 1,987,897 bronze rows, exact. 0
+duplicate user_id. Every one of business/review/user has now published with zero
+quarantine or reject rows - the real messiness on this dataset lives inside field
+*values* (Python-repr strings, inconsistent WiFi encoding), not in structural
+validity, which is a genuinely different failure profile than BRFSS (where R1 BMI
+range was a real, frequently-firing rule).
