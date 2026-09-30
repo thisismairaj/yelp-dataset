@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "4feca65cb8f243bdab24",
+  "position": {
+    "x": 1260,
+    "y": 580,
+    "z": 0,
+    "height": 320,
+    "width": 640,
+    "tabOrder": 12
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Star schema: fact_business, fact_review, fact_user + dim_category/dim_attribute via bridge tables (many-to-many). Avg Business Rating and Avg Review Rating are genuine averages (AVERAGE, not a sum-of-ratio) since stars is already a per-row value, unlike BRFSS's weighted prevalence which needed DIVIDE(SUM,SUM). fact_tip and fact_checkin are built in the warehouse but not yet in this model.",
+                    "textStyle": {
+                      "fontSize": "10px"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

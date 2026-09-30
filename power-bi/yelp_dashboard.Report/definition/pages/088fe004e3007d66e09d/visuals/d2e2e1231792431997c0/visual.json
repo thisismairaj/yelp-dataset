@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "d2e2e1231792431997c0",
+  "position": {
+    "x": 780,
+    "y": 60,
+    "z": 1,
+    "height": 130,
+    "width": 360,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_business"
+                    }
+                  },
+                  "Property": "Closure Rate %"
+                }
+              },
+              "queryRef": "fact_business.Closure Rate %",
+              "nativeQueryRef": "Closure Rate %"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Closure Rate %'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "32ebb47a8dc2453e9090",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_business"
+              }
+            },
+            "Property": "Closure Rate %"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

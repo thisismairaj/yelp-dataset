@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "yelp_dashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "edc31793-70d1-476d-9076-9f198bf80e46"
+  }
+}

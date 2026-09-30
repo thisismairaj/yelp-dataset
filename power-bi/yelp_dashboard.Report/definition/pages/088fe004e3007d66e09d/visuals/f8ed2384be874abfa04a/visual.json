@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "f8ed2384be874abfa04a",
+  "position": {
+    "x": 400,
+    "y": 60,
+    "z": 1,
+    "height": 130,
+    "width": 360,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_business"
+                    }
+                  },
+                  "Property": "Business Count"
+                }
+              },
+              "queryRef": "fact_business.Business Count",
+              "nativeQueryRef": "Business Count"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Business Count'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "3bbe8f7ebff1489db5f5",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_business"
+              }
+            },
+            "Property": "Business Count"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

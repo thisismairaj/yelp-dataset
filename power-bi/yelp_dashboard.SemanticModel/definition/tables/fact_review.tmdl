@@ -1,0 +1,96 @@
+table fact_review
+	lineageTag: dceb2573-18f6-4d26-b298-b92903263e7e
+
+	column review_id
+		dataType: string
+		lineageTag: 94dd9414-6d4e-47e6-8bcd-02fd440d72d7
+		summarizeBy: none
+		sourceColumn: review_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column business_id
+		dataType: string
+		lineageTag: ffc62e41-bb94-4d13-aa47-a8118452ac40
+		summarizeBy: none
+		sourceColumn: business_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_id
+		dataType: string
+		lineageTag: 7ad749ed-5dd4-437c-b22d-3ae1e4940045
+		summarizeBy: none
+		sourceColumn: user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column stars
+		dataType: double
+		lineageTag: 313e5057-2f3a-4e9a-91b3-097dea369564
+		summarizeBy: sum
+		sourceColumn: stars
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column useful
+		dataType: int64
+		formatString: 0
+		lineageTag: c9fb3506-6578-4b94-ba25-3f7bb0ed2c4c
+		summarizeBy: sum
+		sourceColumn: useful
+
+		annotation SummarizationSetBy = Automatic
+
+	column funny
+		dataType: int64
+		formatString: 0
+		lineageTag: 955a0596-c069-4d3b-9a22-e02e65062503
+		summarizeBy: sum
+		sourceColumn: funny
+
+		annotation SummarizationSetBy = Automatic
+
+	column cool
+		dataType: int64
+		formatString: 0
+		lineageTag: ceec6676-34d0-40f5-a28a-6270963236e4
+		summarizeBy: sum
+		sourceColumn: cool
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_date
+		dataType: dateTime
+		lineageTag: e0f53a51-7476-4a68-94f3-9853363065ac
+		summarizeBy: none
+		sourceColumn: review_date
+
+		annotation SummarizationSetBy = Automatic
+
+	measure 'Avg Review Rating' = ```
+			AVERAGE(fact_review[stars])
+			```
+		formatString: 0.00
+		lineageTag: 60da3476-33f4-48f6-8031-31988710c68e
+
+	measure 'Review Count' = ```
+			COUNTROWS(fact_review)
+			```
+		formatString: 0
+		lineageTag: 66d58fbf-7791-4c41-ab94-1e8df19ce374
+
+	partition fact_review = m
+		mode: import
+		source =
+			let
+				Source = DatabricksMultiCloud.Catalogs("dbc-93916528-90f8.cloud.databricks.com", "/sql/1.0/warehouses/6cd9ffe6ba1a7c82", [Catalog=null, Database=null, QueryTags=null, EnableAutomaticProxyDiscovery=null, Implementation="2.0", Protocol=null]),
+				workspace_Database = Source{[Name="workspace",Kind="Database"]}[Data],
+				yelp_gold_Schema = workspace_Database{[Name="yelp_gold",Kind="Schema"]}[Data],
+				fact_review_View = yelp_gold_Schema{[Name="fact_review",Kind="Table"]}[Data]
+			in
+				fact_review_View
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "c0eec365ae65460fbc9c",
+  "position": {
+    "x": 20,
+    "y": 580,
+    "z": 1,
+    "height": 320,
+    "width": 600,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bridge_business_attribute"
+                    }
+                  },
+                  "Property": "attribute_value"
+                }
+              },
+              "queryRef": "bridge_business_attribute.attribute_value",
+              "nativeQueryRef": "attribute_value"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_business"
+                    }
+                  },
+                  "Property": "Avg Business Rating"
+                }
+              },
+              "queryRef": "fact_business.Avg Business Rating",
+              "nativeQueryRef": "Avg Business Rating"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Avg rating by attribute value (use the slicer to pick an attribute)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

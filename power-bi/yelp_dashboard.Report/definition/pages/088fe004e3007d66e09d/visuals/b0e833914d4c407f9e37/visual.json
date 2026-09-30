@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "b0e833914d4c407f9e37",
+  "position": {
+    "x": 640,
+    "y": 700,
+    "z": 1,
+    "height": 200,
+    "width": 600,
+    "tabOrder": 11
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_user"
+                    }
+                  },
+                  "Property": "is_elite_ever"
+                }
+              },
+              "queryRef": "fact_user.is_elite_ever",
+              "nativeQueryRef": "is_elite_ever"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_user"
+                    }
+                  },
+                  "Property": "Avg User Review Count"
+                }
+              },
+              "queryRef": "fact_user.Avg User Review Count",
+              "nativeQueryRef": "Avg User Review Count"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Avg reviews written: elite vs non-elite users'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

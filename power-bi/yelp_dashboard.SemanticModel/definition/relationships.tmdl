@@ -1,0 +1,24 @@
+relationship 439d0a50-a427-4360-95d5-bb76281ef809
+	fromColumn: bridge_business_category.business_id
+	toColumn: fact_business.business_id
+
+relationship 6d643f2f-5ce3-4d25-ae2e-a10cf7c44bee
+	fromColumn: bridge_business_category.category_id
+	toColumn: dim_category.category_id
+
+relationship aabc6efb-13b7-4a74-ac34-bb3f6b33fa9d
+	fromColumn: bridge_business_attribute.business_id
+	toColumn: fact_business.business_id
+
+relationship a252a31f-2fa6-4363-bf0b-44c898ff963e
+	fromColumn: bridge_business_attribute.attribute_id
+	toColumn: dim_attribute.attribute_id
+
+relationship 3c522971-9a9d-4a4f-b840-7a5c2699eb96
+	fromColumn: fact_review.business_id
+	toColumn: fact_business.business_id
+
+relationship 1d12e784-a8c2-4820-8f01-737da3972ef3
+	fromColumn: fact_review.user_id
+	toColumn: fact_user.user_id
+

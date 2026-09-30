@@ -1,0 +1,36 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "a5a76b6889f74156a707",
+  "position": {
+    "x": 20,
+    "y": 8,
+    "z": 0,
+    "height": 40,
+    "width": 1880,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Yelp Open Dataset \u2014 Business, Review & User Analytics (star schema)",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "20px"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

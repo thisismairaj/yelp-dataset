@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "cc167150578741608220",
+  "position": {
+    "x": 1260,
+    "y": 210,
+    "z": 1,
+    "height": 350,
+    "width": 640,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_review"
+                    }
+                  },
+                  "Property": "review_date"
+                }
+              },
+              "queryRef": "fact_review.review_date",
+              "nativeQueryRef": "review_date"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_review"
+                    }
+                  },
+                  "Property": "Avg Review Rating"
+                }
+              },
+              "queryRef": "fact_review.Avg Review Rating",
+              "nativeQueryRef": "Avg Review Rating"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Avg review rating over time'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

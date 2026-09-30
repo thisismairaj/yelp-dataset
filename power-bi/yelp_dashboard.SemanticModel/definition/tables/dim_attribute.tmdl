@@ -1,0 +1,32 @@
+table dim_attribute
+	lineageTag: 47d3c8a0-2dcc-4761-a646-9aa6bfe156e9
+
+	column attribute_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 105fb232-840c-415d-ac55-84c1db269980
+		summarizeBy: sum
+		sourceColumn: attribute_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column attribute_name
+		dataType: string
+		lineageTag: 9a7b927a-8781-4056-82c6-7575d470a329
+		summarizeBy: none
+		sourceColumn: attribute_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_attribute = m
+		mode: import
+		source =
+			let
+				Source = DatabricksMultiCloud.Catalogs("dbc-93916528-90f8.cloud.databricks.com", "/sql/1.0/warehouses/6cd9ffe6ba1a7c82", [Catalog=null, Database=null, QueryTags=null, EnableAutomaticProxyDiscovery=null, Implementation="2.0", Protocol=null]),
+				workspace_Database = Source{[Name="workspace",Kind="Database"]}[Data],
+				yelp_gold_Schema = workspace_Database{[Name="yelp_gold",Kind="Schema"]}[Data],
+				dim_attribute_View = yelp_gold_Schema{[Name="dim_attribute",Kind="Table"]}[Data]
+			in
+				dim_attribute_View
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "6ab26bf9a272463d90ea",
+  "position": {
+    "x": 1540,
+    "y": 60,
+    "z": 1,
+    "height": 130,
+    "width": 360,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_review"
+                    }
+                  },
+                  "Property": "Review Count"
+                }
+              },
+              "queryRef": "fact_review.Review Count",
+              "nativeQueryRef": "Review Count"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Review Count'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "ae32a4abf0fa47cd8fa8",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_review"
+              }
+            },
+            "Property": "Review Count"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

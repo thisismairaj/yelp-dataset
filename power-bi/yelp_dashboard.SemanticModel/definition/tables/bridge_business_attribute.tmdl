@@ -1,0 +1,40 @@
+table bridge_business_attribute
+	lineageTag: 57d440aa-f58f-4fb6-bba8-0c79b6c738bc
+
+	column business_id
+		dataType: string
+		lineageTag: f09dd634-e7eb-408f-a645-fced1f9decea
+		summarizeBy: none
+		sourceColumn: business_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column attribute_id
+		dataType: int64
+		formatString: 0
+		lineageTag: fe899174-33d1-4ac0-9d98-30a94f3ef760
+		summarizeBy: sum
+		sourceColumn: attribute_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column attribute_value
+		dataType: string
+		lineageTag: 41505dfe-666e-439f-8b02-dd690a7f1017
+		summarizeBy: none
+		sourceColumn: attribute_value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition bridge_business_attribute = m
+		mode: import
+		source =
+			let
+				Source = DatabricksMultiCloud.Catalogs("dbc-93916528-90f8.cloud.databricks.com", "/sql/1.0/warehouses/6cd9ffe6ba1a7c82", [Catalog=null, Database=null, QueryTags=null, EnableAutomaticProxyDiscovery=null, Implementation="2.0", Protocol=null]),
+				workspace_Database = Source{[Name="workspace",Kind="Database"]}[Data],
+				yelp_gold_Schema = workspace_Database{[Name="yelp_gold",Kind="Schema"]}[Data],
+				bridge_business_attribute_View = yelp_gold_Schema{[Name="bridge_business_attribute",Kind="Table"]}[Data]
+			in
+				bridge_business_attribute_View
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "76c0bed6f70c475685aa",
+  "position": {
+    "x": 640,
+    "y": 580,
+    "z": 1,
+    "height": 100,
+    "width": 600,
+    "tabOrder": 10
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_attribute"
+                    }
+                  },
+                  "Property": "attribute_name"
+                }
+              },
+              "queryRef": "dim_attribute.attribute_name",
+              "nativeQueryRef": "attribute_name"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "general": [
+        {
+          "properties": {}
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Attribute'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

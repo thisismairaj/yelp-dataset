@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "1149c712f93d4ce9ae24",
+  "position": {
+    "x": 20,
+    "y": 60,
+    "z": 1,
+    "height": 130,
+    "width": 360,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_business"
+                    }
+                  },
+                  "Property": "Avg Business Rating"
+                }
+              },
+              "queryRef": "fact_business.Avg Business Rating",
+              "nativeQueryRef": "Avg Business Rating"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Avg Business Rating'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "a9aa70a4a4b748a98442",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_business"
+              }
+            },
+            "Property": "Avg Business Rating"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}
