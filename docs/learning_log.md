@@ -65,3 +65,34 @@ staying open.
 Providers, Property Management, Apartments all sit at 2.0-2.6 stars - the pattern
 looks like people rate things worse when they have no real alternative to switch to,
 independent of actual service quality.
+
+## Day (2026-09-30) — star schema vs. pre-aggregated gold tables
+
+**Every BRFSS/Yelp gold table so far has been "pre-aggregated per question," not a
+star schema.** A colleague built the same charts with far fewer tables using a proper
+fact + dimension design. The difference: our way bakes the GROUP BY into the table
+itself (new question = new table); fact/dim keeps one fine-grained fact table plus
+small dimension tables, and every question is just a join + GROUP BY at query time
+(new question = new query, not a new table). This is exactly the shape Power BI's own
+DAX measures assume - it's *why* a semantic model exists.
+
+**A many-to-many relationship (a business has several categories) needs its own
+bridge table, not a column on the fact table.** Putting `category_id` directly on
+`fact_business` would force duplicating every business row per category, which
+corrupts any aggregate that isn't category-scoped (a plain `COUNT(*)` of businesses
+would overcount). `bridge_business_category` keeps `fact_business` at exactly one row
+per business while still representing the many-to-many.
+
+**Not every attribute needs its own dimension table.** `city`/`state` stayed as flat
+columns on `fact_business` (a "degenerate dimension") rather than a separate
+`dim_geography` - a business has exactly one address, so a join would buy nothing.
+Category needed a real dimension because of the many-to-many; geography didn't.
+
+**Real syntax rule: `LATERAL VIEW` can't be directly followed by a plain `JOIN` in one
+`FROM` clause.** Had to resolve the `explode()` in its own subquery first, then join
+the result to `dim_category` - a genuine Spark SQL parser rule, not a style choice.
+
+**Proved the two designs agree, not just assumed it.** Recomputed `category_summary`'s
+own numbers (business_count, avg_stars, closed_rate_pct) via
+`fact_business JOIN bridge_business_category JOIN dim_category`, diffed against the
+stored table: 0 mismatches across all 1,311 categories.
