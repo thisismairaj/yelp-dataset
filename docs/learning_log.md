@@ -160,3 +160,40 @@ quarantine or reject rows - the real messiness on this dataset lives inside fiel
 *values* (Python-repr strings, inconsistent WiFi encoding), not in structural
 validity, which is a genuinely different failure profile than BRFSS (where R1 BMI
 range was a real, frequently-firing rule).
+
+## Day (2026-09-30) — fact_user, tip, and checkin (the grain-changing one)
+
+**Hit the Claude Code auto-mode server-side classifier outage mid-session** (a real,
+tracked bug: github.com/anthropics/claude-code/issues/97884 - the server-side safety
+check intermittently returns no verdict, blocking Bash/Write while read-only tools
+keep working). Resolved on its own after a few retries; queued work resumed cleanly
+once it cleared. Nothing lost, no data corrupted - just a pause.
+
+**fact_user: elite status tracks real engagement, not just a badge.** Elite users
+(91,198 of 1,987,897 - 4.6%) write 16x more reviews on average (224.6 vs 13.7) and
+get 50x more useful votes (650.9 vs 13.0) than non-elite users. Also got real sizing
+numbers for the two optional bridge tables discussed earlier: elite-year pairs =
+380,496 (small, cheap to build), but friend edges = 106,104,025 - 106 million, bigger
+than everything else in this entire project combined. Real data before deciding,
+not a guess - `bridge_user_friend` would be a genuinely large undertaking if built.
+
+**tip silver: the first TWO-SIDED FK check in this project.** Every tip has both a
+business_id and a user_id, so silver checks both against business_clean AND
+user_clean (rules FK1, FK2). Also: tip has no natural primary key of its own (no
+tip_id in the source) - noted plainly that K1 duplicate-key checking doesn't apply
+here, rather than silently skipping it without saying so. Result: 908,915 clean + 0
+quarantined + 0 rejected, exact.
+
+**checkin: a silver table that changes the GRAIN, not just corrects values.** Every
+other silver table so far kept "one bronze row -> one silver row" (just parsed/typed/
+split). checkin.json is one row per BUSINESS with every checkin timestamp jammed into
+one comma-separated string (confirmed by looking at a real row: 6 timestamps in one
+field). Silver here explodes that into one row per actual checkin EVENT - a real,
+deliberate change from "business" grain to "checkin instant" grain, documented as
+such rather than treated as just another correction. Caught and fixed a real bug in
+my own draft before running it: an inner JOIN for the business FK check would have
+silently dropped non-matching rows instead of quarantining them, violating the
+project's own core rule - rewritten as LEFT JOIN + explicit quarantine insert.
+Result: 13,356,875 exploded checkin events (bigger than review's 6.99M) - matches the
+sum of comma-separated timestamps exactly, 0 quarantined, 0 rejected, all 131,930
+original businesses' checkin data accounted for.
