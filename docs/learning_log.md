@@ -44,3 +44,24 @@ The real messiness (the Python-repr-in-JSON-string problem) lives one level deep
 than any of silver's checks - inside individual `attributes` values - so it's
 deferred to whichever gold table actually needs to parse `BusinessParking`, rather
 than solved speculatively before anything needs it.
+
+## Day (2026-09-30) — first gold table, real findings
+
+**A business belonging to several categories at once needs `explode`, and the row
+counts stop meaning "one row per business" once you do.** `gold.category_summary` has
+1,311 rows summing to 668,592 business-count (average 4.45 categories per business,
+150,346 real businesses) - correct, not a duplication bug, but a genuinely different
+shape than every BRFSS gold table, where diabetes_code buckets were mutually
+exclusive and counts summed back to the input exactly.
+
+**Rating and survival (closure rate) are answering different questions, not the same
+one.** Highest-rated categories (Real Estate Photography 4.91, niche personal
+services) aren't the ones with the best survival - the highest closure rates
+(Basque 64%, Bistros 61%, Moroccan 59%, French 54%) belong to well-liked niche
+cuisines that are just hard to keep open. A high rating doesn't predict a business
+staying open.
+
+**Low-choice "necessity" services rate worst.** Television/Internet Service
+Providers, Property Management, Apartments all sit at 2.0-2.6 stars - the pattern
+looks like people rate things worse when they have no real alternative to switch to,
+independent of actual service quality.
