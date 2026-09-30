@@ -1,3 +1,9 @@
+-- SUPERSEDED 2026-09-30: retired in favor of the star schema (04_star_schema_business.sql).
+-- Kept in git history, not deleted, and the table itself has been DROPped in Databricks -
+-- 04's fact_business/dim_category/bridge_business_category answers the same questions via
+-- joins instead of a pre-aggregated table, and was proven to produce identical numbers
+-- (0 mismatches across all 1311 categories) before this was retired.
+--
 -- Databricks Trial: gold.category_summary, built from workspace.yelp_silver.business_clean.
 -- Answers: does rating vary by category, and does closure rate vary by category?
 -- (two of the real business-insight questions discussed for this dataset).

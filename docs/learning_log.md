@@ -96,3 +96,9 @@ the result to `dim_category` - a genuine Spark SQL parser rule, not a style choi
 own numbers (business_count, avg_stars, closed_rate_pct) via
 `fact_business JOIN bridge_business_category JOIN dim_category`, diffed against the
 stored table: 0 mismatches across all 1,311 categories.
+
+**Retired `gold.category_summary` once the star schema was proven equivalent.** Table
+DROPped in Databricks; the SQL file stays in git history with a "superseded" note at
+the top rather than being deleted, same convention as BRFSS's old proof-of-concept
+files. Any "rating/closure by category" question now goes through
+`fact_business JOIN bridge_business_category JOIN dim_category` instead.

@@ -57,25 +57,21 @@ SELECT count(*) FROM workspace.yelp_gold.fact_business;                      -- 
 SELECT count(*) FROM workspace.yelp_gold.dim_category;                       -- expect 1311, same as category_summary's row count
 SELECT count(*) FROM workspace.yelp_gold.bridge_business_category;           -- expect 668592, same as category_summary's business_count sum
 
--- The real proof: re-derive category_summary's own numbers via fact+bridge+dim joins,
--- and diff against the stored gold table. If this returns 0 rows, the two designs
--- genuinely agree - not just "look similar," but produce identical numbers.
-WITH recomputed AS (
-  SELECT
-    d.category_name AS category,
-    count(*)                                                    AS business_count,
-    round(avg(f.stars), 2)                                      AS avg_stars,
-    round(100.0 * count(*) FILTER (WHERE f.is_open = 0) / count(*), 2) AS closed_rate_pct
-  FROM workspace.yelp_gold.fact_business f
-  JOIN workspace.yelp_gold.bridge_business_category b ON b.business_id = f.business_id
-  JOIN workspace.yelp_gold.dim_category d ON d.category_id = b.category_id
-  GROUP BY d.category_name
-)
-SELECT r.category, r.business_count AS recomputed_count, s.business_count AS stored_count,
-       r.avg_stars AS recomputed_avg_stars, s.avg_stars AS stored_avg_stars
-FROM recomputed r
-JOIN workspace.yelp_gold.category_summary s ON s.category = r.category
-WHERE r.business_count != s.business_count
-   OR r.avg_stars != s.avg_stars
-   OR r.closed_rate_pct != s.closed_rate_pct;
--- expect 0 rows: the star schema and the pre-aggregated table agree exactly
+-- The category-level numbers, now derived via fact+bridge+dim joins instead of a
+-- stored pre-aggregated table. This exact query was originally run as a diff against
+-- gold.category_summary to PROVE the two designs agreed (0 mismatches across all 1311
+-- categories, 2026-09-30) before category_summary was retired and dropped - see
+-- 03_gold_category_summary.sql's superseded note. That comparison step is gone now
+-- since there's nothing left to diff against; this is the query that replaces it going
+-- forward for any "rating/closure by category" question.
+SELECT
+  d.category_name AS category,
+  count(*)                                                             AS business_count,
+  round(avg(f.stars), 2)                                                AS avg_stars,
+  round(100.0 * count(*) FILTER (WHERE f.is_open = 0) / count(*), 2)    AS closed_rate_pct
+FROM workspace.yelp_gold.fact_business f
+JOIN workspace.yelp_gold.bridge_business_category b ON b.business_id = f.business_id
+JOIN workspace.yelp_gold.dim_category d ON d.category_id = b.category_id
+GROUP BY d.category_name
+ORDER BY business_count DESC
+LIMIT 20;
