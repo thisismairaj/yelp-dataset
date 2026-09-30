@@ -197,3 +197,15 @@ project's own core rule - rewritten as LEFT JOIN + explicit quarantine insert.
 Result: 13,356,875 exploded checkin events (bigger than review's 6.99M) - matches the
 sum of comma-separated timestamps exactly, 0 quarantined, 0 rejected, all 131,930
 original businesses' checkin data accounted for.
+
+**Star schema finished: fact_tip, fact_checkin, dim_date.** dim_date spans the REAL
+min/max dates found across fact_review/fact_tip/fact_checkin (least()/greatest() over
+6 real MIN/MAX scans, not a guessed range) - 6,182 calendar days, 2005-02-16 to
+2022-01-19. First real payoff query using it: checkin count by day of week, joined
+through dim_date instead of calling dayofweek() inline. Saturday (2.81M) and Sunday
+(2.48M) are clearly the busiest, Tuesday the quietest (1.46M) - an intuitive weekend
+pattern, and confirms the date join works correctly end to end.
+
+Full star schema, done: fact_business, fact_review, fact_user, fact_tip,
+fact_checkin, dim_category + bridge, dim_attribute + bridge, dim_date. Ready for
+visualizations without needing any more new gold tables for most questions.
