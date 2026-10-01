@@ -2,3 +2,6 @@
 data/
 *.json.gz
 *.zip
+
+# working notes: kept local, not shown publicly
+docs/
